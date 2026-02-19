@@ -1,0 +1,23 @@
+{
+  "name": "express-01",
+  "version": "1.0.0",
+  "description": "Projeto Express + PostgreSQl para estudo",
+  "keywords": [
+    "freecodecamp",
+    "aplicacao",
+    "postgresql",
+    "squelize"
+  ],
+  "license": "MIT",
+  "author": "Hallason Matias da Silva",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "@freecodecamp/example": "~1.2.13",
+    "express": "^4.14.0",
+    "nodemon": "^3.1.12"
+  }
+}
