@@ -1,0 +1,25 @@
+{
+  "name": "express-02",
+  "version": "1.0.0",
+  "description": "Homework 01 for AOS - Express Project - REST API",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec --label-node api/node.js"
+  },
+  "keywords": [
+    "express",
+    "sequelize"
+  ],
+  "license": "MIT",
+  "author": "Hallason Matias",
+  "type": "commonjs",
+  "dependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/node": "^7.29.0",
+    "@babel/preset-env": "^7.29.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
+}
