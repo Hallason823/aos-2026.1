@@ -24,6 +24,17 @@ router.post("/", async (req, res) => {
   return res.send(message);
 });
 
+router.put("/:messageId", async (req, res) => {
+    const message = await req.context.models.User.update({
+    text: req.body.text,
+    userId: req.body.userId
+  },
+  {
+    where: { id: req.params.messageId },  
+  });
+    return res.send(user);
+});
+
 router.delete("/:messageId", async (req, res) => {
   const result = await req.context.models.Message.destroy({
     where: { id: req.params.messageId },

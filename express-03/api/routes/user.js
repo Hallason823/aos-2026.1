@@ -20,8 +20,15 @@ router.post("/", async (req, res) => {
   return res.send(user);
 });
 
-router.put("/:userId", (req, res) => {
-  return res.send(`PUT HTTP method on user/${req.params.userId} resource`);
+router.put("/:userId", async (req, res) => {
+  const user = await req.context.models.User.update({
+    username: req.body.username,
+    email: req.body.email
+  },
+  {
+    where: { id: req.params.userId },  
+  });
+    return res.send(user);
 });
 
 router.delete("/:userId", async (req, res) => {
