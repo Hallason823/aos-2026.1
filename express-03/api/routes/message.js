@@ -32,7 +32,7 @@ router.put("/:messageId", async (req, res) => {
   {
     where: { id: req.params.messageId },  
   });
-    return res.send(user);
+    return res.send(message);
 });
 
 router.delete("/:messageId", async (req, res) => {
