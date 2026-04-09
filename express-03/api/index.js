@@ -32,6 +32,13 @@ app.get("/", (req, res) => {
   );
 });
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    error: err.message || "Erro interno no servidor"
+  });
+});
+
 const port = process.env.PORT ?? 3000;
 const eraseDatabaseOnSync = process.env.ERASE_DATABASE_ON_SYNC === "true";
 

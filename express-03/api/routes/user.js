@@ -4,12 +4,15 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   const users = await req.context.models.User.findAll();
-  return res.send(users);
+  return res.status(200).send(users);
 });
 
 router.get("/:userId", async (req, res) => {
   const user = await req.context.models.User.findByPk(req.params.userId);
-  return res.send(user);
+  if (!user) {
+    return res.status(400).send({ error : "User not found" });
+  }
+  return res.status(200).send(user);
 });
 
 router.post("/", async (req, res) => {
@@ -17,25 +20,33 @@ router.post("/", async (req, res) => {
     username: req.body.username,
     email: req.body.email
   });
-  return res.send(user);
+  return res.status(201).send(user);
 });
 
 router.put("/:userId", async (req, res) => {
-  const user = await req.context.models.User.update({
+  const response = await req.context.models.User.update({
     username: req.body.username,
     email: req.body.email
   },
   {
-    where: { id: req.params.userId },  
+    where: { id: req.params.userId },
+    returning: true,
   });
-    return res.send(user);
+  if (response[0] === 0) {
+    return res.status(404).send({ error: "User not found" });
+  }
+  const user = response[1][0];
+  return user.status(200).send(user);
 });
 
 router.delete("/:userId", async (req, res) => {
   const result = await req.context.models.User.destroy({
     where: { id: req.params.userId }, 
-  })
-  return res.send(true);
+  });
+  if (!result) {
+    return res.status(400).send({ error : "User not found" });
+  }
+  return res.status(204).send(true);
 });
 
 export default router;
