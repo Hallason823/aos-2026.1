@@ -20,6 +20,7 @@ const getUserModel = (sequelize, { DataTypes }) => {
 
   User.associate = (models) => {
     User.hasMany(models.Message, { onDelete: "CASCADE" });
+    User.hasMany(models.Tarefa, { onDelete: "CASCADE" });
   };
 
   User.findByLogin = async (login) => {
