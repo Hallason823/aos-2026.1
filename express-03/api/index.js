@@ -3,7 +3,7 @@ import cors from "cors";
 import express from "express";
 
 import models, { sequelize } from "./models";
-import routes from "./routes";
+import { session, user, message } from "./routes";
 
 const app = express();
 app.set("trust proxy", true);
@@ -22,20 +22,37 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/session", routes.session);
-app.use("/users", routes.user);
-app.use("/messages", routes.message);
+app.use("/session", session);
+app.use("/users", user);
+app.use("/messages", message);
 
 app.get("/", (req, res) => {
-  res.send(
+  res.status(200).send(
     "Received a GET HTTP method\nServidor rodando!\n" + process.env.MESSAGE,
   );
 });
 
+// Global Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(err.status || 500).json({
-    error: err.message || "Erro interno no servidor"
+
+  if (err.name === "SequelizeValidationError") {
+    return res.status(400).send({
+      error: "Bad Request: Validation failed.",
+      messages: err.errors.map((e) => e.message),
+    });
+  }
+
+  if (err.name === "SequelizeUniqueConstraintError") {
+    return res.status(409).send({
+      error: "Conflict: Resource already exists.",
+      messages: err.errors.map((e) => e.message),
+    });
+  }
+
+  res.status(500).send({
+    error: "Something went wrong! Internal Server Error.",
+    message: err.message,
   });
 });
 

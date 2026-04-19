@@ -1,9 +1,3 @@
-import session from "./session";
-import user from "./user";
-import message from "./message";
-
-export default {
-  session,
-  user,
-  message,
-};
+export { default as session } from "./session";
+export { default as user } from "./user";
+export { default as message } from "./message";
