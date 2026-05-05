@@ -6,7 +6,13 @@
   "scripts": {
     "start": "nodemon --exec babel-node api/index.js"
   },
-  "keywords": ["express", "postgresql", "sequelize", "resume", "rest-api"],
+  "keywords": [
+    "express",
+    "postgresql",
+    "sequelize",
+    "resume",
+    "rest-api"
+  ],
   "author": "Hallason Matias",
   "license": "MIT",
   "type": "commonjs",

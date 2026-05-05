@@ -12,6 +12,9 @@ const getSkillModel = (sequelize, { DataTypes }) => {
     category: {
       type: DataTypes.STRING,
     },
+  }, {
+    tableName: "skills",
+    freezeTableName: true,
   });
 
   Skill.associate = (models) => {

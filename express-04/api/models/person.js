@@ -23,6 +23,9 @@ const getPersonModel = (sequelize, { DataTypes }) => {
     summary: {
       type: DataTypes.TEXT,
     },
+  }, {
+    tableName: "persons",
+    freezeTableName: true,
   });
 
   Person.associate = (models) => {

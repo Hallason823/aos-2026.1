@@ -14,6 +14,9 @@ const getProjectModel = (sequelize, { DataTypes }) => {
     technologies: {
       type: DataTypes.STRING,
     },
+  }, {
+    tableName: "projects",
+    freezeTableName: true,
   });
 
   Project.associate = (models) => {

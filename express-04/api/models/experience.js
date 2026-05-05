@@ -20,6 +20,9 @@ const getExperienceModel = (sequelize, { DataTypes }) => {
     description: {
       type: DataTypes.TEXT,
     },
+  }, {
+    tableName: "experiences",
+    freezeTableName: true,
   });
 
   Experience.associate = (models) => {

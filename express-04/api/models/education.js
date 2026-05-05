@@ -25,6 +25,9 @@ const getEducationModel = (sequelize, { DataTypes }) => {
     description: {
       type: DataTypes.TEXT,
     },
+  }, {
+    tableName: "educations",
+    freezeTableName: true,
   });
 
   Education.associate = (models) => {
