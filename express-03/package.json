@@ -24,6 +24,8 @@
     "nodemon": "^3.1.12",
     "pg": "^8.20.0",
     "sequelize": "^6.37.8",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3"
   }
 }

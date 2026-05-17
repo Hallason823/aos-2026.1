@@ -4,23 +4,23 @@ import express from "express";
 
 import models, { sequelize } from "./models";
 import { session, user, message, tarefa } from "./routes";
+import { authMiddleware, protectRoutes } from "./middlewares";
 
 const app = express();
 app.set("trust proxy", true);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(async (req, res, next) => {
-  req.context = {
-    models,
-    me: await models.User.findByLogin("rwieruch"),
-  };
+app.use((req, res, next) => {
+  req.context = { models };
   next();
 });
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path} - ${req.ip}`);
   next();
 });
+app.use(authMiddleware);
+app.use(protectRoutes);
 
 app.use("/session", session);
 app.use("/users", user);
@@ -33,7 +33,6 @@ app.get("/", (req, res) => {
   );
 });
 
-// Global Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
 
@@ -62,7 +61,7 @@ const eraseDatabaseOnSync = process.env.ERASE_DATABASE_ON_SYNC === "true";
 
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   if (eraseDatabaseOnSync) {
-    createUsersWithMessages();
+    await createUsersWithMessages();
   }
 
   app.listen(port, () =>
@@ -77,6 +76,7 @@ const createUsersWithMessages = async () => {
     {
       username: "rwieruch",
       email: "rwieruch@email.com",
+      password: "password123",
       messages: [
         {
           text: "Published the Road to learn React",
@@ -92,6 +92,7 @@ const createUsersWithMessages = async () => {
     {
       username: "ddavids",
       email: "ddavids@email.com",
+      password: "password123",
       messages: [
         {
           text: "Happy to release ...",
